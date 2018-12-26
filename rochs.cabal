@@ -17,11 +17,20 @@ extra-source-files:  CHANGELOG.md
 cabal-version:       >=1.10
 
 library
-  -- exposed-modules:
+  exposed-modules:
+      Statistics.Classification.ConfusionMatrix
+    , Statistics.Classification.ConfusionMatrix.Binary
+    , Statistics.Classification.ConfusionMatrix.Multi
+    , Statistics.Classification.ConfusionMatrix.Types
+    , Statistics.Classification.ROC
   -- other-modules:
   -- other-extensions:
   build-depends:
       base >= 4.12 && <4.13
+    , cassava >= 0.4
+    , containers >= 0.5
+    , unordered-containers >= 0.2.7
     , vector >= 0.12
+    , vector-algorithms >= 0.7
   hs-source-dirs:      src
   default-language:    Haskell2010
