@@ -104,8 +104,11 @@ updRocState p n s0 r
 efficientROC :: Foldable f => Int -> Int -> f (ClassificationScore Bool) -> ROC
 efficientROC p n = out . addArea . foldl' (updRocState p n) emptyEffRocState
   where
+    finAUC effr
+      | p == 0 || n == 0 = 0 -- degenerate case, no actual positive or negative examples.
+      | otherwise = (effRocAUC effr + trapezoidArea n (effRocFPprev effr) n (effRocTPprev effr)) / fromIntegral (p * n)
     out s = ROC {
-        rocAUC = (effRocAUC s + trapezoidArea n (effRocFPprev s) n (effRocTPprev s)) / fromIntegral (p * n)
+        rocAUC = finAUC s
       , rocCurve = V.fromList $ effRocOut s
       }
 

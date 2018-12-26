@@ -12,6 +12,7 @@ import Data.Ord (comparing)
 
 import Data.Csv ((.:), (.=), DefaultOrdered(..), ToNamedRecord(..), FromNamedRecord(..), namedRecord)
 import Data.Vector.Algorithms.Tim
+import Test.QuickCheck (Arbitrary(..), choose)
 import qualified Data.HashMap.Strict as HashMap
 import qualified Data.Vector as V
 
@@ -38,6 +39,9 @@ instance FromNamedRecord a => FromNamedRecord (ClassificationScore a) where
   parseNamedRecord r = ClassificationScore <$>
         parseNamedRecord (HashMap.delete "prob_up" r)
     <*> r .: "prob_up"
+
+instance Arbitrary a => Arbitrary (ClassificationScore a) where
+  arbitrary = ClassificationScore <$> arbitrary <*> choose (0, 1)
 
 sortByScore :: V.Vector (ClassificationScore a) -> V.Vector (ClassificationScore a)
 sortByScore = V.modify (sortBy (comparing classifiedScore))
