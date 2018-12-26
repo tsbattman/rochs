@@ -43,7 +43,6 @@ instance DefaultOrdered ROCPoint where
       "true_positive_rate"
     , "false_positive_rate"
     , "cutoff"
-    , "f1"
     ] <> headerOrder (undefined :: ConfusionMatrix)
 
 instance ToNamedRecord ROCPoint where
