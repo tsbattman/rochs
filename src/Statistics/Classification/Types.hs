@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module Statistics.Classification.ConfusionMatrix.Types (
+module Statistics.Classification.Types (
     ClassificationResult(..)
   , ClassificationScore(..)
   , sortByScore

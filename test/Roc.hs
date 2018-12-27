@@ -3,7 +3,6 @@ module Roc (testRoc) where
 
 import Test.Tasty
 import Test.Tasty.QuickCheck
-import Statistics.Classification.ConfusionMatrix (ClassificationScore(..))
 import Statistics.Classification.ROC (ROC(..), roc)
 import qualified Data.Vector as V
 

@@ -13,10 +13,8 @@ import Data.List (foldl')
 import Data.Csv ((.:), (.=), DefaultOrdered(..), FromNamedRecord(..), ToNamedRecord(..), header, namedRecord)
 import qualified Data.Vector as V
 
-import Statistics.Classification.ConfusionMatrix (
-    ConfusionMatrix, ClassificationResult(..), ClassificationScore(..)
-  , trueConfMatrix, truePosRate, falsePosRate, sortByScore
-  )
+import Statistics.Classification.ConfusionMatrix (ConfusionMatrix, trueConfMatrix, truePosRate, falsePosRate)
+import Statistics.Classification.Types (ClassificationResult(..), ClassificationScore(..), sortByScore)
 
 data ROC = ROC {
     rocAUC :: !Double

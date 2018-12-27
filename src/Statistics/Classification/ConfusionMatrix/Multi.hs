@@ -14,7 +14,7 @@ module Statistics.Classification.ConfusionMatrix.Multi (
 import qualified Data.Map.Strict as Map
 import qualified Data.Set as Set
 
-import Statistics.Classification.ConfusionMatrix.Types (ClassificationResult(..))
+import Statistics.Classification.Types (ClassificationResult(..))
 
 data MultiConfusionMatrix a = MultiConfusionMatrix {
     confCounts :: Map.Map (ClassificationResult a) Int

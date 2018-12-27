@@ -24,7 +24,7 @@ import qualified Data.Set as Set
 
 import Statistics.Classification.ConfusionMatrix.Multi (MultiConfusionMatrix(..), PosNeg
   , truePositiveCount, falsePositiveCount, falseNegativeCount, trueNegativeCount)
-import Statistics.Classification.ConfusionMatrix.Types (ClassificationResult(..))
+import Statistics.Classification.Types (ClassificationResult(..))
 
 data ConfusionMatrix = ConfusionMatrix {
     truePositive :: {-# UNPACK #-}!(Sum Int)

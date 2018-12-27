@@ -21,7 +21,7 @@ library
       Statistics.Classification.ConfusionMatrix
     , Statistics.Classification.ConfusionMatrix.Binary
     , Statistics.Classification.ConfusionMatrix.Multi
-    , Statistics.Classification.ConfusionMatrix.Types
+    , Statistics.Classification.Types
     , Statistics.Classification.ROC
   -- other-modules:
   other-extensions:
