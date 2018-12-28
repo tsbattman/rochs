@@ -83,27 +83,27 @@ addArea s0 = s0 { effRocAUC = effRocAUC s0 + area }
     area = trapezoidArea (effRocFP s0) (effRocFPprev s0) (effRocTP s0) (effRocTPprev s0)
 
 updRocState :: Int -> Int -> EffRocState -> ClassificationScore Bool -> EffRocState
-updRocState p n s0 r
-  | effRocCutoff s0 /= cutoff = (addArea s1) { effRocCutoff = cutoff, effRocTPprev = effRocTP s1, effRocFPprev = effRocFP s1 }
-  | otherwise = s1
+updRocState p n s r
+  | effRocCutoff s /= cutoff = nextExample . nextCutoff $ addArea s
+  | otherwise = nextExample s
   where
     cutoff = classifiedScore r
     actual = classifiedExample r
-    s1' = if actual
-      then s0 { effRocTP = effRocTP s0 + 1 }
-      else s0 { effRocFP = effRocFP s0 + 1 }
-    cm = trueConfMatrix (ClassificationResult p (effRocTP s1')) (ClassificationResult n (n - effRocFP s1'))
-    s1 = s1' { effRocOut = rocPoint cutoff cm : effRocOut s1' }
+    nextCutoff s0 = s0 { effRocCutoff = cutoff, effRocTPprev = effRocTP s0, effRocFPprev = effRocFP s0 }
+    nextExample s0 =
+      let s1 = if actual then s0 { effRocTP = effRocTP s0 + 1 } else s0 { effRocFP = effRocFP s0 + 1 }
+          cm = trueConfMatrix (ClassificationResult p (effRocTP s1)) (ClassificationResult n (n - effRocFP s1))
+      in s1 { effRocOut = rocPoint cutoff cm : effRocOut s1 }
 
 -- O(n log n) ROC curve generation and AUC calculation
 -- Algorithm 1 and 2 in
 -- Fawcett, T., 2006. An Introduction to ROC Analysis. Pattern Recognition Letters 27 (861 - 874)
 efficientROC :: Foldable f => Int -> Int -> f (ClassificationScore Bool) -> ROC
-efficientROC p n = out . addArea . foldl' (updRocState p n) emptyEffRocState
+efficientROC p n = out . foldl' (updRocState p n) emptyEffRocState
   where
     finAUC effr
       | p == 0 || n == 0 = 0 -- degenerate case, no actual positive or negative examples.
-      | otherwise = (effRocAUC effr + trapezoidArea n (effRocFPprev effr) n (effRocTPprev effr)) / fromIntegral (p * n)
+      | otherwise = (effRocAUC effr + trapezoidArea n (effRocFPprev effr) p (effRocTPprev effr)) / fromIntegral (p * n)
     out s = ROC {
         rocAUC = finAUC s
       , rocCurve = V.fromList $ effRocOut s
