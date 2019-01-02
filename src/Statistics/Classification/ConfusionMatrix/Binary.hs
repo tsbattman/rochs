@@ -85,8 +85,8 @@ resultCount cm (ClassificationResult actual prd) = classCount cm prd actual
 
 classCount :: ConfusionMatrix -> Bool -> Bool -> Int
 classCount cm prd actual = getSum $ if prd
-  then (if actual then  truePositive cm else falseNegative cm)
-  else (if actual then falsePositive cm else  trueNegative cm)
+  then (if actual then  truePositive cm else falsePositive cm)
+  else (if actual then falseNegative cm else  trueNegative cm)
 
 totalCount :: ConfusionMatrix -> Int
 totalCount cm = getSum $ truePositive cm <> falsePositive cm <> falseNegative cm <> trueNegative cm
