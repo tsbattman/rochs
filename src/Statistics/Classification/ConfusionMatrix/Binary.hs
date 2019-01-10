@@ -35,10 +35,10 @@ data ConfusionMatrix = ConfusionMatrix {
 
 instance Semigroup ConfusionMatrix where
   cm0 <> cm1 = ConfusionMatrix {
-      truePositive = truePositive cm0 <> truePositive cm1
+      truePositive  = truePositive  cm0 <> truePositive  cm1
     , falsePositive = falsePositive cm0 <> falsePositive cm1
     , falseNegative = falseNegative cm0 <> falseNegative cm1
-    , trueNegative = trueNegative cm0 <> trueNegative cm1
+    , trueNegative  = trueNegative  cm0 <> trueNegative  cm1
     }
 
 instance Monoid ConfusionMatrix where
@@ -73,11 +73,11 @@ instance FromNamedRecord ConfusionMatrix where
 --       classifiedActual    is the number of actual samples in class
 -- Give numbers for both true and false labels
 trueConfMatrix :: ClassificationResult Int -> ClassificationResult Int -> ConfusionMatrix
-trueConfMatrix tp tn = ConfusionMatrix {
-    truePositive  = Sum $ classifiedPredicted tp
-  , falseNegative = Sum $ classifiedActual tp - classifiedPredicted tp
-  , falsePositive = Sum $ classifiedActual tn - classifiedPredicted tn
-  , trueNegative  = Sum $ classifiedPredicted tn
+trueConfMatrix pos neg = ConfusionMatrix {
+    truePositive  = Sum $ classifiedPredicted pos
+  , falseNegative = Sum $ classifiedActual pos - classifiedPredicted pos
+  , falsePositive = Sum $ classifiedActual neg - classifiedPredicted neg
+  , trueNegative  = Sum $ classifiedPredicted neg
   }
 
 resultCount :: ConfusionMatrix -> ClassificationResult Bool -> Int
