@@ -29,7 +29,7 @@ library
       OverloadedStrings
     , ScopedTypeVariables
   build-depends:
-      base >= 4.12 && <4.13
+      base >= 4.11 && <4.13
     , cassava >= 0.4
     , containers >= 0.5
     , QuickCheck >= 2.9
