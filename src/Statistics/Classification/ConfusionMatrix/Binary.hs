@@ -6,7 +6,7 @@ module Statistics.Classification.ConfusionMatrix.Binary (
   , resultCount, classCount, totalCount
   , actualPositive, actualNegative, predPositive, predNegative
   , truePosRate, falseNegRate, falsePosRate, trueNegRate
-  , accuracy, errorRate, recall, precision, specificity
+  , prevalence, accuracy, errorRate, recall, precision, specificity
   , oddsRatio
   , phiCorrelation
   , fScore, f1Score
@@ -103,7 +103,8 @@ falseNegRate cm = fromIntegral (getSum (falseNegative cm)) / fromIntegral (actua
 falsePosRate cm = fromIntegral (getSum (falsePositive cm)) / fromIntegral (actualNegative cm)
 trueNegRate = specificity
 
-accuracy, errorRate, recall, precision, specificity :: ConfusionMatrix -> Double
+prevalence, accuracy, errorRate, recall, precision, specificity :: ConfusionMatrix -> Double
+prevalence cm = fromIntegral (actualPositive cm) / fromIntegral (totalCount cm)
 accuracy cm = fromIntegral (getSum (truePositive cm <> trueNegative cm)) / fromIntegral (totalCount cm)
 errorRate cm = fromIntegral (getSum (falsePositive cm <> falseNegative cm)) / fromIntegral (totalCount cm)
 recall cm = fromIntegral (getSum (truePositive cm)) / fromIntegral (actualPositive cm)
